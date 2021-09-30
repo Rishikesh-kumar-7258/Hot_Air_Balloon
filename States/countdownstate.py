@@ -18,7 +18,7 @@ class Countdown(Base):
         Write(fontsize=72, text=str(self.count//60), color=THECOLORS['goldenrod'], screen=self.screen, x=self.wwidth//2, y=self.wheight//2, center=True)
         Write(fontsize=24, text="use arrow keys left and right to move", color=THECOLORS['aquamarine'], screen=self.screen, x=self.wwidth//2, y=self.wheight//2 + 100, center=True)
 
-    def update(self) -> None :
+    def update(self, params) -> None :
         self.count -= 1
         self.render()
         if self.count//60 <= 0 : self.gstatemachine.change('play', screen=self.screen, width=self.wwidth, height=self.wheight, statemachine=self.gstatemachine)

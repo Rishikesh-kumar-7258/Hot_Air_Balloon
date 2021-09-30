@@ -21,7 +21,7 @@ class Start(Base):
         self.startbtn = Button(x=self.wwidth//2, y=self.wheight//2+100, background=THECOLORS["darkred"], color=THECOLORS['goldenrod'], text="Start", screen=self.screen)
         self.startbtn.render()
     
-    def update(self):
+    def update(self, params):
 
         self.render()
 

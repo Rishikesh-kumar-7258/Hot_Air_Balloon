@@ -20,5 +20,5 @@ class StateMachine:
         self.current = self.states[state]
         self.current.enter(**params)
     
-    def update(self, *params):
-        self.current.update()
+    def update(self, params):
+        self.current.update(params)

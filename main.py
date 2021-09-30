@@ -31,12 +31,13 @@ gstatemachine.change("start",
 
 while not GAME_OVER:
 
-    for event in pygame.event.get():
+    events = pygame.event.get()
+    for event in events:
         if event.type == QUIT:
             GAME_OVER = True
 
     SCREEN.fill(THECOLORS["black"])
-    gstatemachine.update()
+    gstatemachine.update(events)
     pygame.display.update()
     clock.tick(60)
     
