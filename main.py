@@ -1,9 +1,11 @@
+from States.countdownstate import Countdown
 import pygame
 from Classes.statemachine import StateMachine
 from States.startstate import Start
 import sys
 from pygame.constants import QUIT
 from pygame.color import THECOLORS
+pygame.init()
 
 WINDOW_WIDTH = 500
 WINDOW_HEIGHT = 750
@@ -13,12 +15,16 @@ GAME_OVER = False
 clock = pygame.time.Clock()
 
 STATES = {
-    "start" : Start()
+    "start" : Start(),
+    'countdown' : Countdown()
 }
 
 gstatemachine = StateMachine(STATES)
 gstatemachine.change("start", 
-                            screen = SCREEN)
+                            screen = SCREEN,
+                            wwidth = WINDOW_WIDTH,
+                            wheight = WINDOW_HEIGHT,
+                            gstatemachine=gstatemachine)
 
 while not GAME_OVER:
 

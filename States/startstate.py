@@ -1,5 +1,8 @@
+from pygame import color
+from Classes.buttons import Button
 from Utils.functions import Write
 from States.basestate import Base
+from pygame.color import THECOLORS
 
 class Start(Base):
     """
@@ -10,13 +13,26 @@ class Start(Base):
 
     def __init__(self) -> None:
         super().__init__()
+
+        self.startbtn = None
     
     def render(self):
-        Write(text="Umbrella Game", screen=self.screen)
+        Write(text="Hot Air Balloon", screen=self.screen, x=self.wwidth//2, y=self.wheight//2, center=True, fontsize=64, color=THECOLORS['goldenrod'])
+        self.startbtn = Button(x=self.wwidth//2, y=self.wheight//2+100, background=THECOLORS["darkred"], color=THECOLORS['goldenrod'], text="Start", screen=self.screen)
+        self.startbtn.render()
     
     def update(self):
 
         self.render()
+
+        if self.startbtn.clicked() : self.gstatemachine.change('countdown', screen=self.screen, width=self.wwidth, height=self.wheight, statemachine=self.gstatemachine)
+
+        self.startbtn.update()
     
     def enter(self, **params):
         self.screen = params["screen"]
+        self.wwidth = params['wwidth']
+        self.wheight = params['wheight']
+        self.gstatemachine = params['gstatemachine']
+
+        self.__init__()
