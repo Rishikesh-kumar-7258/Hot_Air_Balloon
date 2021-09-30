@@ -20,11 +20,13 @@ class Countdown(Base):
 
     def update(self) -> None :
         self.count -= 1
-        if self.count//60 < 0 : self.gstatemachine.change('play', screen=self.screen, width=self.wwidth, height=self.wheight, statemachine=self.gstatemachine)
         self.render()
+        if self.count//60 <= 0 : self.gstatemachine.change('play', screen=self.screen, width=self.wwidth, height=self.wheight, statemachine=self.gstatemachine)
     
     def enter(self, **params):
         self.screen = params['screen']
         self.wwidth = params['width']
         self.wheight = params['height']
         self.gstatemachine = params['statemachine']
+
+        self.__init__()

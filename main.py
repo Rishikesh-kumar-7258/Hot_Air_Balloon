@@ -1,3 +1,4 @@
+from States.playstate import Play
 from States.countdownstate import Countdown
 import pygame
 from Classes.statemachine import StateMachine
@@ -11,12 +12,14 @@ WINDOW_WIDTH = 500
 WINDOW_HEIGHT = 750
 
 SCREEN = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+pygame.display.set_caption("Hot Air Balloon")
 GAME_OVER = False
 clock = pygame.time.Clock()
 
 STATES = {
     "start" : Start(),
-    'countdown' : Countdown()
+    'countdown' : Countdown(),
+    "play" : Play()
 }
 
 gstatemachine = StateMachine(STATES)
