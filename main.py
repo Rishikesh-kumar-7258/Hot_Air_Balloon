@@ -1,3 +1,4 @@
+from States.gameoverstate import GameOver
 from States.playstate import Play
 from States.countdownstate import Countdown
 import pygame
@@ -19,7 +20,8 @@ clock = pygame.time.Clock()
 STATES = {
     "start" : Start(),
     'countdown' : Countdown(),
-    "play" : Play()
+    "play" : Play(),
+    "over" : GameOver()
 }
 
 gstatemachine = StateMachine(STATES)

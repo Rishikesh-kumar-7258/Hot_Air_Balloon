@@ -1,5 +1,6 @@
 from Classes.hurdles import Hurdle
 from pygame.constants import K_LEFT, K_RIGHT, KEYDOWN, KEYUP
+from pygame.color import THECOLORS
 from Classes.balloon import Balloon
 from Utils.functions import Write
 import pygame
@@ -18,16 +19,40 @@ class Play(Base):
         self.speedX = 0
 
         self.hurdle_speed = 5
+        self.countDeleted = 0
+        self.score = 0
 
 
     def render(self) -> None :
-        # Write(text="This is playstate", fontsize=72, screen=self.screen)
+        Write(text=f"Score : {self.score}", fontsize=25, screen=self.screen, color=THECOLORS['goldenrod'])
         self.all_sprites.draw(self.screen)
 
     def update(self, params) -> None:
 
+        if self.current_hurdle.rect.y > 200 : 
+            self.current_hurdle = Hurdle()
+            self.current_hurdle.rect.center = (randrange(self.current_hurdle.rect.width, self.wwidth - self.current_hurdle.rect.width), 0)
+            self.all_sprites.add(self.current_hurdle)
+            self.hurdles.add(self.current_hurdle)
+
+        passedCount = 0
         for hurdle in self.hurdles:
+            if pygame.sprite.collide_mask(self.balloon, hurdle):
+                self.speedY = 0
+                self.hurdle_speed = 0
+                self.gstatemachine.change("over", screen=self.screen, width=self.wwidth, height=self.wheight, score=self.score, gstatemachine=self.gstatemachine)
             hurdle.rect.y += self.hurdle_speed
+
+            if hurdle.rect.y > self.balloon.rect.y + self.balloon.rect.height:
+                passedCount += 1
+                self.hurdle_speed += 0.01
+
+            if hurdle.rect.y >= self.wheight : 
+                self.countDeleted += 1
+                hurdle.kill()
+            
+        self.score = self.countDeleted + passedCount
+
 
         if self.balloon.rect.y > self.wwidth // 2 + 100: self.balloon.rect.y -= self.speedY
         if self.balloon.rect.left >= 0 and self.balloon.rect.right <= self.wwidth : self.balloon.rect.x += self.speedX

@@ -21,14 +21,18 @@ class Balloon(pygame.sprite.Sprite):
         self.rect.center = (self.x, self.y)
 
         self.mask = pygame.mask.from_surface(self.image)
+
+        pygame.transform.scale(self.image, (25, 57))
     
     def change(self, orient=None):
         if orient == "left": 
             self.image = self.image2
-            self.image.set_colorkey(THECOLORS['white'])
         elif orient == 'right':
             self.image = self.image3
-            self.image.set_colorkey(THECOLORS['white'])
         else : 
             self.image = self.image1
-            self.image.set_colorkey(THECOLORS['white'])
+
+            
+        self.image.set_colorkey(THECOLORS['white'])
+        
+        pygame.transform.scale(self.image, (25, 57))
