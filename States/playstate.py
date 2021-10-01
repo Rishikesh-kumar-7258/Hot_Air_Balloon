@@ -1,3 +1,4 @@
+from Classes.bonuspoints import Bonus
 from Classes.hurdles import Hurdle
 from pygame.constants import K_LEFT, K_RIGHT, KEYDOWN, KEYUP
 from pygame.color import THECOLORS
@@ -22,6 +23,10 @@ class Play(Base):
         self.countDeleted = 0
         self.score = 0
 
+        self.bonusScore = 5
+        self.current_bonus = None
+        self.bonusgroup = pygame.sprite.Group()
+
 
     def render(self) -> None :
         Write(text=f"Score : {self.score}", fontsize=25, screen=self.screen, color=THECOLORS['goldenrod'])
@@ -29,11 +34,12 @@ class Play(Base):
 
     def update(self, params) -> None:
 
-        if self.current_hurdle.rect.y > 200 : 
-            self.current_hurdle = Hurdle()
-            self.current_hurdle.rect.center = (randrange(self.current_hurdle.rect.width, self.wwidth - self.current_hurdle.rect.width), 0)
-            self.all_sprites.add(self.current_hurdle)
-            self.hurdles.add(self.current_hurdle)
+        for bonus in self.bonusgroup:
+            bonus.rect.y += self.hurdle_speed
+
+        if self.current_hurdle.rect.y > 200 :
+            for i in range(self.score // 25 + 1):
+                self.add_hurlde()
 
         passedCount = 0
         for hurdle in self.hurdles:
@@ -45,14 +51,17 @@ class Play(Base):
 
             if hurdle.rect.y > self.balloon.rect.y + self.balloon.rect.height:
                 passedCount += 1
-                self.hurdle_speed += 0.01
+                self.hurdle_speed += 0.001
 
-            if hurdle.rect.y >= self.wheight : 
+            if hurdle.rect.y >= self.wheight :
                 self.countDeleted += 1
                 hurdle.kill()
             
         self.score = self.countDeleted + passedCount
 
+        if (self.score and self.score%10 == 0) :
+
+            self.add_bonus()
 
         if self.balloon.rect.y > self.wwidth // 2 + 100: self.balloon.rect.y -= self.speedY
         if self.balloon.rect.left >= 0 and self.balloon.rect.right <= self.wwidth : self.balloon.rect.x += self.speedX
@@ -83,13 +92,36 @@ class Play(Base):
         self.wheight = params['height']
         self.gstatemachine = params['statemachine']
 
-        self.balloon = Balloon(x=self.wwidth // 2, y=self.wheight - 50, screen=self.screen)
+        self.balloon = Balloon()
+        self.balloon.rect.center = (self.wwidth // 2, self.wheight - 50)
         self.all_sprites = pygame.sprite.Group()
         self.hurdles = pygame.sprite.Group()
 
         self.all_sprites.add(self.balloon)
 
+        self.add_hurlde()
+
+    def add_hurlde(self) -> None:
+        """
+        This function will add the hurdles on screen. It reduces some code and makes game code more readable.
+
+        usage:
+            self.add_hurlde()
+        """
         self.current_hurdle = Hurdle()
         self.current_hurdle.rect.center = (randrange(self.current_hurdle.rect.width, self.wwidth - self.current_hurdle.rect.width), 0)
         self.all_sprites.add(self.current_hurdle)
         self.hurdles.add(self.current_hurdle)
+    
+    def add_bonus(self) -> None:
+        """
+        This function will add the Bonuses on screen. It reduces some code and makes game code more readable.
+
+        usage:
+            self.add_bonus()
+        """
+
+        self.current_bonus = Bonus()
+        self.current_bonus.rect.center = (randrange(self.current_bonus.rect.width, self.wwidth - self.current_bonus.rect.width), -50)
+        self.all_sprites.add(self.current_bonus)
+        self.bonusgroup.add(self.current_bonus)

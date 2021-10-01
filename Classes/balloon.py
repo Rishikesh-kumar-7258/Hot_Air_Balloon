@@ -2,13 +2,12 @@ import pygame
 from pygame.color import THECOLORS
 
 class Balloon(pygame.sprite.Sprite):
+    """
+    This is our balloon class. Players will control this balloon with left and right arrow keys and save from getting touched to hurdles.
+    """
     
-    def __init__(self, x=0, y=0, screen=None) -> None:
+    def __init__(self) -> None:
         super().__init__()
-
-        self.x = x
-        self.y = y
-        self.screen = screen
         
         self.image1 = pygame.image.load("Utils/Images/straight.png").convert()
         self.image2 = pygame.image.load("Utils/Images/left.png").convert()
@@ -17,8 +16,6 @@ class Balloon(pygame.sprite.Sprite):
         self.image = self.image1
         self.image.set_colorkey(THECOLORS['white'])
         self.rect = self.image.get_rect()
-
-        self.rect.center = (self.x, self.y)
 
         self.mask = pygame.mask.from_surface(self.image)
 
@@ -32,7 +29,7 @@ class Balloon(pygame.sprite.Sprite):
         else : 
             self.image = self.image1
 
-            
+
         self.image.set_colorkey(THECOLORS['white'])
         
         pygame.transform.scale(self.image, (25, 57))
