@@ -2,6 +2,7 @@ import pygame
 from States.basestate import Base
 from Utils.functions import Write
 from pygame.color import THECOLORS
+from pygame.cursors import arrow
 
 class Countdown(Base):
     """
@@ -15,6 +16,7 @@ class Countdown(Base):
         self.count = 240
 
     def render(self)-> None :
+        pygame.mouse.set_cursor(pygame.cursors.arrow)
         Write(fontsize=72, text=str(self.count//60), color=THECOLORS['goldenrod'], screen=self.screen, x=self.wwidth//2, y=self.wheight//2, center=True)
         Write(fontsize=24, text="use arrow keys left and right to move", color=THECOLORS['aquamarine'], screen=self.screen, x=self.wwidth//2, y=self.wheight//2 + 100, center=True)
 

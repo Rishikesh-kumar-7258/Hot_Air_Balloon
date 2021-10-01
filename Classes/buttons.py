@@ -57,8 +57,8 @@ class Button:
         #     "                        ",
         #     "                        "]
             
-        # if self.hover() : pygame.mouse.set_cursor(pygame.cursors.compile(thickarrow_strings, black='X', white='.', xor="o"))
-        # else : pygame.mouse.set_cursor(pygame.cursors.arrow)
+        if self.hover() : pygame.mouse.set_cursor(pygame.cursors.tri_left)
+        else : pygame.mouse.set_cursor(pygame.cursors.arrow)
         self.render()
 
     
