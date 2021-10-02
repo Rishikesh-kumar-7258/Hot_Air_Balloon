@@ -10,13 +10,38 @@ class Base:
         leave()             -> exits the state and used in statemachine class
     """
 
-    def __init__(self) -> None:pass
+    def __init__(self) -> None:
+        """
+        Built in functinaliy of python class.
+        It works as a constructor for the class.
+        """
+        pass
 
-    def enter(self, **params) -> None: pass
+    def enter(self, **params) -> None: 
+        """
+        This method is called first when the state is changed.
+        """
+        
+        pass
 
-    def render(self) -> None: pass
+    def render(self) -> None: 
+        """
+        This method renders all the drawing and sprites on the screen.
+        The update method keeps calling this method to constantly render sprites and other game objects on screen.
+        """
+        pass
 
-    def update(self, *params) -> None:
+    def update(self, params) -> None:
+        """
+        This method is called once in each game loop.
+        All the updates and changes are done in this mehod.
+        It takes on argument as a parameter(in most case that is events).
+        """
         self.render()
     
-    def leave(self) -> None: pass
+    def leave(self) -> None: 
+        """
+        This method is called during the state change. 
+        The state machine calls this method to leave the current state and enter into the next one.
+        """
+        pass
