@@ -26,6 +26,8 @@ class Play(Base):
         self.bonusScore = 5
         self.current_bonus = None
         self.bonusgroup = pygame.sprite.Group()
+        self.create_bonus = True
+        self.bonus = 0
 
 
     def render(self) -> None :
@@ -34,8 +36,12 @@ class Play(Base):
 
     def update(self, params) -> None:
 
+
         for bonus in self.bonusgroup:
             bonus.rect.y += self.hurdle_speed
+            if pygame.sprite.collide_mask(self.balloon, bonus):
+                self.bonus += self.bonusScore
+                bonus.kill()
 
         if self.current_hurdle.rect.y > 200 :
             for i in range(self.score // 25 + 1):
@@ -57,11 +63,16 @@ class Play(Base):
                 self.countDeleted += 1
                 hurdle.kill()
             
-        self.score = self.countDeleted + passedCount
+        self.score = self.countDeleted + passedCount + self.bonus
 
-        if (self.score and self.score%10 == 0) :
+        if ((self.countDeleted + passedCount) %10 == 1) :
+            self.create_bonus = True
+
+        if (self.score and (self.countDeleted + passedCount) %10 == 0 and self.create_bonus) :
 
             self.add_bonus()
+            self.create_bonus = False
+        
 
         if self.balloon.rect.y > self.wwidth // 2 + 100: self.balloon.rect.y -= self.speedY
         if self.balloon.rect.left >= 0 and self.balloon.rect.right <= self.wwidth : self.balloon.rect.x += self.speedX
