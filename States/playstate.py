@@ -40,8 +40,20 @@ class Play(Base):
         # Storing variable to keep track of making the bonus
         self.create_bonus = 180
 
+        # loading background image for our game
+        self.background1 = pygame.image.load("Utils/Images/background.png")
+        self.brect1 = self.background1.get_rect()
+        self.background2 = self.background1
+        self.brect2 = self.background2.get_rect()
+        self.brect2.y = -self.brect2.height
+        self.background_speed = 3
+
 
     def render(self) -> None :
+
+        #displaying the background image
+        self.screen.blit(self.background1, self.brect1)
+        self.screen.blit(self.background2, self.brect2)
 
         # Display score on the screen
         Write(text=f"Score : {self.score}", fontsize=25, screen=self.screen, color=THECOLORS['goldenrod'])
@@ -49,7 +61,12 @@ class Play(Base):
         # Display all the sprite on the screen
         self.all_sprites.draw(self.screen)
 
+
     def update(self, params) -> None:
+
+        #moving background
+        self.brect1.y = self.brect1.y + self.background_speed if self.brect1.y < self.wheight else -self.brect1.height
+        self.brect2.y = self.brect2.y + self.background_speed if self.brect2.y < self.wheight else -self.brect1.height
 
         # decreasing create bonus on each update
         self.create_bonus -= 1

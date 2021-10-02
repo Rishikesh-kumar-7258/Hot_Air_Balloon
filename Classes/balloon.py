@@ -18,8 +18,6 @@ class Balloon(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         self.mask = pygame.mask.from_surface(self.image)
-
-        pygame.transform.scale(self.image, (25, 57))
     
     def change(self, orient=None):
         if orient == "left": 
@@ -31,5 +29,3 @@ class Balloon(pygame.sprite.Sprite):
 
 
         self.image.set_colorkey(THECOLORS['white'])
-        
-        pygame.transform.scale(self.image, (25, 57))

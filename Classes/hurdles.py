@@ -12,4 +12,3 @@ class Hurdle(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         self.mask = pygame.mask.from_surface(self.image)
-
