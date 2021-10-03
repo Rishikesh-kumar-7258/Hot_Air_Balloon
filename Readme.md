@@ -1,7 +1,5 @@
-# Flappy Bird
-This is popular game is one of the most important initial games to make in a journey of a game developer.
-As enjoy it is in playing, as much it is in making and gives you opportunity to learn many different game concepts.
-Here is my version of flappy bird, created using pygame.
+# Hot Air Balloon
+This is an amazing game make using pygame.
 
 ![Visits Badge](https://badges.pufler.dev/visits/Rishikesh-kumar-7258/Hot_Air_Balloon)
 ![Updated Badge](https://badges.pufler.dev/updated/Rishikesh-kumar-7258/Hot_Air_Balloon)
