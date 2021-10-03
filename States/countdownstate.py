@@ -18,7 +18,7 @@ class Countdown(Base):
     def render(self)-> None :
         pygame.mouse.set_cursor(pygame.cursors.arrow)
         Write(fontsize=72, text=str(self.count//60), color=THECOLORS['goldenrod'], screen=self.screen, x=self.wwidth//2, y=self.wheight//2, center=True)
-        Write(fontsize=24, text="use arrow keys left and right to move", color=THECOLORS['aquamarine'], screen=self.screen, x=self.wwidth//2, y=self.wheight//2 + 100, center=True)
+        Write(fontsize=24, text="Use arrow keys left and right to move", color=THECOLORS['aquamarine'], screen=self.screen, x=self.wwidth//2, y=self.wheight//2 + 100, center=True)
 
     def update(self, params) -> None :
         self.count -= 1

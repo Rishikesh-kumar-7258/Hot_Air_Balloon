@@ -42,6 +42,7 @@ class Play(Base):
 
         # loading background image for our game
         self.background1 = pygame.image.load("Utils/Images/background.png")
+        self.background1 = pygame.transform.scale(self.background1, (500, 750))
         self.brect1 = self.background1.get_rect()
         self.background2 = self.background1
         self.brect2 = self.background2.get_rect()
@@ -65,8 +66,8 @@ class Play(Base):
     def update(self, params) -> None:
 
         #moving background
-        self.brect1.y = self.brect1.y + self.background_speed if self.brect1.y < self.wheight else -self.brect1.height
-        self.brect2.y = self.brect2.y + self.background_speed if self.brect2.y < self.wheight else -self.brect1.height
+        self.brect1.y = self.brect1.y + self.background_speed if self.brect1.y < self.wheight else -self.brect1.height + 6
+        self.brect2.y = self.brect2.y + self.background_speed if self.brect2.y < self.wheight else -self.brect1.height + 6
 
         # decreasing create bonus on each update
         self.create_bonus -= 1
