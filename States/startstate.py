@@ -1,4 +1,4 @@
-from pygame import color
+import pygame
 from Classes.buttons import Button
 from Utils.functions import Write
 from States.basestate import Base
@@ -15,11 +15,16 @@ class Start(Base):
         super().__init__()
 
         self.startbtn = None
+        self.background = pygame.image.load("Utils/Images/start_background.png")
+        self.rect = self.background.get_rect()
     
     def render(self):
+        self.screen.blit(self.background, self.rect)
         Write(text="Hot Air Balloon", screen=self.screen, x=self.wwidth//2, y=self.wheight//2, center=True, fontsize=64, color=THECOLORS['goldenrod'])
         self.startbtn = Button(x=self.wwidth//2, y=self.wheight//2+100, background=THECOLORS["darkred"], color=THECOLORS['goldenrod'], text="Start", screen=self.screen)
         self.startbtn.render()
+        
+
     
     def update(self, params):
 

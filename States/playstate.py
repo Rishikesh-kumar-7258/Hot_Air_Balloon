@@ -49,6 +49,9 @@ class Play(Base):
         self.brect2.y = -self.brect2.height
         self.background_speed = 3
 
+        # Number of hurdles are increased after this score
+        self.hurdle_count = 1
+
 
     def render(self) -> None :
 
@@ -66,8 +69,8 @@ class Play(Base):
     def update(self, params) -> None:
 
         #moving background
-        self.brect1.y = self.brect1.y + self.background_speed if self.brect1.y < self.wheight else -self.brect1.height + 6
-        self.brect2.y = self.brect2.y + self.background_speed if self.brect2.y < self.wheight else -self.brect1.height + 6
+        self.brect1.y = self.brect1.y + self.background_speed if self.brect1.y < self.wheight else - self.brect1.height + self.background_speed
+        self.brect2.y = self.brect2.y + self.background_speed if self.brect2.y < self.wheight else - self.brect2.height + self.background_speed
 
         # decreasing create bonus on each update
         self.create_bonus -= 1
@@ -90,7 +93,7 @@ class Play(Base):
 
         # if the current hurdle is more than 200 away from the 0 vertically a new hurdle is created
         if self.current_hurdle.rect.y > 200 :
-            for i in range(self.score // 25 + 1):
+            for i in range(self.hurdle_count):
                 self.add_hurlde()
 
         # variable to store the number of hurdles passed
