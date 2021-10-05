@@ -1,6 +1,6 @@
 from Classes.bonuspoints import Bonus
 from Classes.hurdles import Hurdle
-from pygame.constants import K_LEFT, K_RIGHT, KEYDOWN, KEYUP
+from pygame.constants import K_LEFT, K_RIGHT, KEYDOWN, KEYUP, K_p
 from pygame.color import THECOLORS
 from Classes.balloon import Balloon
 from Utils.functions import Write
@@ -52,6 +52,15 @@ class Play(Base):
         # Number of hurdles are increased after this score
         self.hurdle_count = 1
 
+        # Lives handline
+        self.lives = 3
+        self.lost_lives = 0
+        self.lives_image = pygame.image.load("Utils/Images/lives.png")
+        self.lost_lives_image = pygame.image.load("Utils/Images/lost_lives.png")
+
+        # adding paused functionality
+        self.paused = False
+
 
     def render(self) -> None :
 
@@ -62,11 +71,51 @@ class Play(Base):
         # Display score on the screen
         Write(text=f"Score : {self.score}", fontsize=25, screen=self.screen, color=THECOLORS['goldenrod'])
 
+        # displaying the the lives
+        for i in range(self.lives):
+            lives = self.lives_image
+            if self.lives - self.lost_lives < i+1: lives = self.lost_lives_image
+            rect = lives.get_rect()
+            rect.center = (self.wwidth - 15*(i+1) - 25*i, 15)
+            self.screen.blit(lives, rect)
+
         # Display all the sprite on the screen
         self.all_sprites.draw(self.screen)
 
 
     def update(self, params) -> None:
+
+        # calling render function again
+        self.render()
+
+        # This is event handling section events are passed from main.py
+        for event in params:
+
+            # If any button is pressed
+            if event.type == KEYDOWN:
+
+                # pause function
+                if event.key == K_p:
+                    self.paused = not self.paused
+
+                # Controlling the balloon if right or left arrow key is pressed
+                if event.key == K_LEFT:
+                    self.balloon.change("left")
+                    self.speedX = -5
+                if event.key == K_RIGHT:
+                    self.balloon.change("right")
+                    self.speedX = 5
+            
+            # If the pressed key is released
+            if event.type == KEYUP:
+                self.balloon.change()
+                self.speedX = 0
+        
+        # if the game is paused
+        if self.paused : 
+            Write(text="Paused", fontsize=72, color=THECOLORS["darkred"], screen=self.screen, x=self.wwidth//2, y=self.wheight//2, center=True)
+            Write(text="Press p to continue", color=THECOLORS["goldenrod"], screen=self.screen, x=self.wwidth//2, y=self.wheight//2 + 100, center=True)
+            return
 
         #moving background
         self.brect1.y = self.brect1.y + self.background_speed if self.brect1.y < self.wheight else - self.brect1.height + self.background_speed
@@ -104,9 +153,14 @@ class Play(Base):
 
             # checking if any hurdle collided with the balloon
             if pygame.sprite.collide_mask(self.balloon, hurdle):
-                self.speedY = 0
-                self.hurdle_speed = 0
-                self.gstatemachine.change("over", screen=self.screen, width=self.wwidth, height=self.wheight, score=self.score, gstatemachine=self.gstatemachine)
+                self.lost_lives += 1
+                if (self.lost_lives == self.lives) :
+                    self.speedY = 0
+                    self.hurdle_speed = 0
+                    self.gstatemachine.change("over", screen=self.screen, width=self.wwidth, height=self.wheight, score=self.score, gstatemachine=self.gstatemachine)
+                self.respawn()
+                # Write(text=f"{self.lives - self.lost_lives} lives remaining", color=THECOLORS["goldenrod"], screen=self.screen, x=self.wwidth//2, y=self.wheight//2, center=True)
+                pygame.time.wait(1000)
 
             # moving the hurdle
             hurdle.rect.y += self.hurdle_speed
@@ -130,31 +184,9 @@ class Play(Base):
         if self.balloon.rect.left <= 0 : self.balloon.rect.left = 2
         if self.balloon.rect.right >= self.wwidth : self.balloon.rect.right = self.wwidth - 2
 
-        # This is event handling section events are passed from main.py
-        for event in params:
-
-            # If any button is pressed
-            if event.type == KEYDOWN:
-
-                # Controlling the balloon if right or left arrow key is pressed
-                if event.key == K_LEFT:
-                    self.balloon.change("left")
-                    self.speedX = -5
-                if event.key == K_RIGHT:
-                    self.balloon.change("right")
-                    self.speedX = 5
-            
-            # If the pressed key is released
-            if event.type == KEYUP:
-                self.balloon.change()
-                self.speedX = 0
-        
         # updating the balloon class
         self.balloon.update()
 
-        # calling render function again
-        self.render()
-    
     def enter(self, **params):
 
         # calling init function
@@ -199,3 +231,12 @@ class Play(Base):
         self.all_sprites.add(self.current_bonus)
         self.bonusgroup.add(self.current_bonus)
         self.create_bonus = False
+
+    def respawn(self) -> None:
+        """
+        This function respawns the balloon after getting hit by any hurdle.
+        """
+        self.balloon.rect.x = randrange(0, self.wwidth - self.balloon.rect.width - 10)
+        for hurdle in self.hurdles:
+            while pygame.sprite.collide_mask(self.balloon, hurdle):
+                self.balloon.rect.x = randrange(0, self.wwidth - self.balloon.rect.width - 10)
