@@ -33,7 +33,7 @@ In this game we can learn how to work with
 ## Installation
 If you want to try this game on your computer then do the following steps:
 
-***The executable file for this game is also avaiable. Installing the executable and running it on your device will save you a lot of trouble***
+***The executable file for this game is also avaiable. Installing the executable and running it on your device will save you a lot of trouble. Just download the dist folder and find main.exe file in there and run it.***
 
 1. Fork this repo in your personal github account
 2. Make a copy of that repo in your device
