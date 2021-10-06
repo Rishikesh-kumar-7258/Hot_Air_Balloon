@@ -2,7 +2,6 @@ virtual
 __pycache__
 **/__pycache__
 *.css
-*.exe
 build
-dist
 main.spec
+setup.py
