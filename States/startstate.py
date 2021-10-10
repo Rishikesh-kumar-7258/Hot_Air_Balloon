@@ -1,7 +1,6 @@
 import pygame
 from Classes.buttons import Button
-from Utils.functions import Write
-from f import resource_path
+from Utils.functions import Write, resource_path
 from States.basestate import Base
 from pygame.color import THECOLORS
 

@@ -3,13 +3,10 @@ from Classes.hurdles import Hurdle
 from pygame.constants import K_LEFT, K_RIGHT, KEYDOWN, KEYUP, K_p
 from pygame.color import THECOLORS
 from Classes.balloon import Balloon
-from Utils.functions import Write
+from Utils.functions import Write, resource_path
 import pygame
 from States.basestate import Base
 from random import *
-from f import resource_path
-
-from f import resource_path
 
 class Play(Base):
     """
@@ -179,7 +176,10 @@ class Play(Base):
                 hurdle.kill()
 
         # Updating our score  
-        self.score = self.countDeleted + passedCount + self.bonus       
+        self.score = self.countDeleted + passedCount + self.bonus
+        
+        # creating an extra hurdle when score reaches 100
+        if self.score >= 100 : self.hurdle_count = 2
 
         # preventing the balloon from getting too far left or too right of the screen
         if self.balloon.rect.y > self.wwidth // 2 + 100: self.balloon.rect.y -= self.speedY
