@@ -10,7 +10,7 @@ This is an amazing game make using pygame.
 ![Issues Badge](https://img.shields.io/github/issues/Rishikesh-kumar-7258/Hot_Air_Balloon?style=flat-square)
 ![Issues Badge](https://img.shields.io/github/issues-pr/Rishikesh-kumar-7258/Hot_Air_Balloon?style=flat-square)
 ![Lines of code](https://img.shields.io/tokei/lines/github/Rishikesh-kumar-7258/Hot_Air_Balloon?style=flat-square)
-![GitHub repo size](https://img.shields.io/github/repo-size/Rishikesh-kumar-7258/C-Plus-Plus?color=red&style=flat-square)
+![GitHub repo size](https://img.shields.io/github/repo-size/Rishikesh-kumar-7258/Hot_Air_Balloon?color=red&style=flat-square)
 ![contributions welcome](https://img.shields.io/static/v1.svg?label=Contributions&message=Welcome&color=0059b3&style=flat-square)
 
 ## About pygame
