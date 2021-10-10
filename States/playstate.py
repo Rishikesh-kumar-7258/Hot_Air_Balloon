@@ -7,6 +7,9 @@ from Utils.functions import Write
 import pygame
 from States.basestate import Base
 from random import *
+from f import resource_path
+
+from f import resource_path
 
 class Play(Base):
     """
@@ -41,7 +44,7 @@ class Play(Base):
         self.create_bonus = 180
 
         # loading background image for our game
-        self.background1 = pygame.image.load("Utils/Images/background.png")
+        self.background1 = pygame.image.load(resource_path("Utils/Images/background.png"))
         self.background1 = pygame.transform.scale(self.background1, (500, 750))
         self.brect1 = self.background1.get_rect()
         self.background2 = self.background1
@@ -55,8 +58,8 @@ class Play(Base):
         # Lives handline
         self.lives = 3
         self.lost_lives = 0
-        self.lives_image = pygame.image.load("Utils/Images/lives.png")
-        self.lost_lives_image = pygame.image.load("Utils/Images/lost_lives.png")
+        self.lives_image = pygame.image.load(resource_path("Utils/Images/lives.png"))
+        self.lost_lives_image = pygame.image.load(resource_path("Utils/Images/lost_lives.png"))
 
         # adding paused functionality
         self.paused = False

@@ -1,6 +1,7 @@
 import pygame
 from Classes.buttons import Button
 from Utils.functions import Write
+from f import resource_path
 from States.basestate import Base
 from pygame.color import THECOLORS
 
@@ -15,7 +16,7 @@ class Start(Base):
         super().__init__()
 
         self.startbtn = None
-        self.background = pygame.image.load("Utils/Images/start_background.png")
+        self.background = pygame.image.load(resource_path("Utils/Images/start_background.png"))
         self.rect = self.background.get_rect()
     
     def render(self):
